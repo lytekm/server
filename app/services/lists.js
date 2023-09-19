@@ -49,9 +49,23 @@ const getTasks = (listid) => {
   });
 };
 
+const getCompleteTasks = (listid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM tasks WHERE list_id = ? AND completed = 1";
+    const params = [listid];
+    db.all(sql, params, (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows);
+    });
+  });
+};
+
 module.exports = {
   createList,
   updateList,
   deleteList,
   getTasks,
+  getCompleteTasks,
 };

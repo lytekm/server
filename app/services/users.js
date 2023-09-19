@@ -18,10 +18,13 @@ function login(username, password) {
   // user login
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-    db.all(sql, [username, password], (err, rows) => {
+    db.get(sql, [username, password], (err, rows) => {
       if (err) {
         reject(err);
         console.log(err);
+      }
+      if (!rows) {
+        resolve("fail");
       }
       resolve("success");
     });

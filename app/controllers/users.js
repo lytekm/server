@@ -26,9 +26,15 @@ async function login(req, res) {
     const password = req.body.password;
     const users = await service.login(username, password);
     console.log("user logged in:", users);
-    res.status(200).json({
-      message: users,
-    });
+    if (users === "success") {
+      res.status(200).json({
+        message: users,
+      });
+    } else {
+      res.status(500).json({
+        message: "username or password incorrect",
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({

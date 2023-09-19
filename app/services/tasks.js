@@ -45,6 +45,21 @@ const completeTask = (taskid) => {
   });
 };
 
+const setCompletionDate = (taskid, date) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE tasks SET datecompleted = ? WHERE task_id = ?";
+    const params = [date, taskid];
+    database.run(sql, params, function (err) {
+      if (err) {
+        console.log(err);
+        reject(err.message);
+      } else {
+        resolve("row updated");
+      }
+    });
+  });
+};
+
 const updateTask = (taskid, tasktext) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE tasks SET taskname = ? WHERE task_id = ?";
@@ -111,4 +126,5 @@ module.exports = {
   getText,
   getNumberOfItems,
   getCompletion,
+  setCompletionDate,
 };

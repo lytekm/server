@@ -46,7 +46,9 @@ async function completeTask(req, res) {
     const data = {
       taskid: req.params.taskid,
     };
+    const date = new Date();
     const result = await services.completeTask(data.taskid, data.listid);
+    setDate(data.taskid, date);
     console.log("task completed:", data.taskid);
     res.status(200).json({
       message: result,

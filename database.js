@@ -1,4 +1,5 @@
 let sqllite3 = require("sqlite3").verbose();
+let md5 = require("md5");
 
 const DBSOURCE = "db.sqlite";
 
@@ -17,6 +18,7 @@ let db = new sqllite3.Database(DBSOURCE, (err) => {
             password text,
             created text,
             plan text,
+            permission text,
             constraint email_unique UNIQUE (email)
             constraint username_unique UNIQUE (username)
             )`,
@@ -77,6 +79,7 @@ let db = new sqllite3.Database(DBSOURCE, (err) => {
         list_id INTEGER,
         username text,
         taskname text,
+        datecompleted text DEFAULT NULL,
         completed INTEGER DEFAULT 0,
         unique (task_id)
       )`,
@@ -84,6 +87,19 @@ let db = new sqllite3.Database(DBSOURCE, (err) => {
         if (err) {
           //table already created
           console.log(err);
+        }
+      }
+    );
+    db.run(
+      `INSERT INTO user (username, email, password, created, plan,permission) VALUES ("admin", "admin@membrant.com", "${md5(
+        "admin@membrant"
+      )}", "2023-09-19", "paid", "admin")`,
+      (err) => {
+        if (err) {
+          //table already created
+          console.log(err);
+        } else {
+          console.log("admin created");
         }
       }
     );

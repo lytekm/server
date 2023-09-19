@@ -74,9 +74,26 @@ async function getTasks(req, res) {
   }
 }
 
+async function getCompleteTasks(req, res) {
+  try {
+    const listid = req.params.listid;
+    const result = await services.getCompleteTasks(listid);
+    console.log("completed:", listid);
+    if (result.length === 0) {
+      res.status(200);
+    }
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+}
+
 module.exports = {
   createList,
   updateList,
   deleteList,
   getTasks,
+  getCompleteTasks,
 };
