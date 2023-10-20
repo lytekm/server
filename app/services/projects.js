@@ -63,10 +63,40 @@ const getLists = (projectid) => {
   });
 };
 
+const updateDateAccessed = (projectid) => {
+  const date = new Date();
+  const dateaccessed = date.toISOString();
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE projects SET dateaccessed = ? WHERE project_id = ?";
+    db.run(sql, [dateaccessed, projectid], (err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve("Project updated");
+    });
+  });
+};
+
+const getRecentProjects = (user) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT projectname, MAX(datetime(dateaccessed)) AS last_accessed, project_id FROM projects WHERE username = ? GROUP BY projectname ORDER BY last_accessed DESC LIMIT 3;";
+    db.all(sql, [user], (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+      // return the 3 most recently accessed projects
+      resolve(rows);
+    });
+  });
+};
+
 module.exports = {
   getProjects,
   createProject,
   deleteProject,
   updateProject,
   getLists,
+  getRecentProjects,
+  updateDateAccessed,
 };

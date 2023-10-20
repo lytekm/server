@@ -47,6 +47,7 @@ async function deleteList(req, res) {
   try {
     const listid = req.params.listid;
     const result = await services.deleteList(listid);
+    deleteTasks(listid);
     console.log("list deleted:", listid);
     res.status(200).json({
       message: result,

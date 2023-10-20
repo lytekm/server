@@ -37,6 +37,18 @@ const deleteList = (listid) => {
   });
 };
 
+const deleteTasks = (listid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE FROM tasks WHERE list_id = ?";
+    db.run(sql, [listid], (err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve("tasks deleted");
+    });
+  });
+};
+
 const getTasks = (listid) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM tasks WHERE list_id = ?";

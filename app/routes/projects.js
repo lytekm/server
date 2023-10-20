@@ -7,5 +7,6 @@ router.post("/", controllers.createProject);
 router.delete("/:id", controllers.deleteProject);
 router.put("/:id", controllers.updateProject);
 router.get("/lists/:projectid", controllers.getLists);
+router.get("/recent/:user", controllers.getRecentProjects);
 
 module.exports = router;

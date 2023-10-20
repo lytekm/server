@@ -68,8 +68,22 @@ async function getLists(req, res) {
   try {
     const projectid = req.params.projectid;
     const lists = await services.getLists(projectid);
+    services.updateDateAccessed(projectid);
     console.log("lists retrieved:", projectid);
     res.status(200).json(lists);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+}
+
+async function getRecentProjects(req, res) {
+  try {
+    const user = req.params.user;
+    const projects = await services.getRecentProjects(user);
+    console.log("recent projects retrieved:", user);
+    res.status(200).json(projects);
   } catch (err) {
     res.status(500).json({
       error: err.message,
@@ -83,4 +97,5 @@ module.exports = {
   deleteProject,
   updateProject,
   getLists,
+  getRecentProjects,
 };
