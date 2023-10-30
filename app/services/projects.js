@@ -91,6 +91,19 @@ const getRecentProjects = (user) => {
   });
 };
 
+const getCompletedTasks = (projectid) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT taskname FROM tasks WHERE list_id IN (SELECT list_id FROM lists WHERE project_id = ?) AND completed = 1";
+    db.all(sql, [projectid], (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows);
+    });
+  });
+};
+
 module.exports = {
   getProjects,
   createProject,
@@ -99,4 +112,5 @@ module.exports = {
   getLists,
   getRecentProjects,
   updateDateAccessed,
+  getCompletedTasks,
 };

@@ -91,6 +91,19 @@ async function getRecentProjects(req, res) {
   }
 }
 
+async function getCompletedTasks(req, res) {
+  try {
+    const projectid = req.params.projectid;
+    const tasks = await services.getCompletedTasks(projectid);
+    console.log("completed tasks retrieved:", projectid);
+    res.status(200).json(tasks);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+}
+
 module.exports = {
   getProjects,
   createProject,
@@ -98,4 +111,5 @@ module.exports = {
   updateProject,
   getLists,
   getRecentProjects,
+  getCompletedTasks,
 };

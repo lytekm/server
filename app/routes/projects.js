@@ -8,5 +8,6 @@ router.delete("/:id", controllers.deleteProject);
 router.put("/:id", controllers.updateProject);
 router.get("/lists/:projectid", controllers.getLists);
 router.get("/recent/:user", controllers.getRecentProjects);
+router.get("/complete/:projectid", controllers.getCompletedTasks);
 
 module.exports = router;
