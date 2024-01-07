@@ -90,26 +90,10 @@ async function getText(req, res) {
   }
 }
 
-async function getCompletion(req, res) {
-  try {
-    const data = req.params.listid;
-    const result = await services.getNumberOfItems(data);
-    const completed = await services.getCompletion(data);
-    console.log("completed:", completed, "total:", result);
-    const key = "COUNT(*)";
-    res.status(200).json({ completed: completed[key], total: result[key] });
-  } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
-  }
-}
-
 module.exports = {
   createTask,
   deleteTask,
   completeTask,
   updateTask,
   getText,
-  getCompletion,
 };

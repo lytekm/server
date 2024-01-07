@@ -104,6 +104,20 @@ const getCompletedTasks = (projectid) => {
   });
 };
 
+const getCompletion = (projectid) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT (sum(t.completed = 1) * 100.0 / COUNT(*)) AS completion_percentage FROM projects p LEFT JOIN lists l ON p.project_id = l.project_id LEFT JOIN tasks t ON l.list_id = t.list_id WHERE p.project_id = ?;";
+    db.all(sql, [projectid], (err, rows) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(rows);
+    });
+  });
+};
+
 module.exports = {
   getProjects,
   createProject,
@@ -113,4 +127,5 @@ module.exports = {
   getRecentProjects,
   updateDateAccessed,
   getCompletedTasks,
+  getCompletion,
 };

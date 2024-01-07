@@ -9,5 +9,6 @@ router.put("/:id", controllers.updateProject);
 router.get("/lists/:projectid", controllers.getLists);
 router.get("/recent/:user", controllers.getRecentProjects);
 router.get("/complete/:projectid", controllers.getCompletedTasks);
+router.get("/completion/:projectid", controllers.getCompletion);
 
 module.exports = router;

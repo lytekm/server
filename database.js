@@ -91,6 +91,23 @@ let db = new sqllite3.Database(DBSOURCE, (err) => {
       }
     );
     db.run(
+      `CREATE TABLE dayplanner(
+        dayplanner_id INTEGER,
+        username text,
+        taskname text,
+        starttime text,
+        endtime text,
+        notes text,
+        unique (dayplanner_id)
+      )`,
+      (err) => {
+        if (err) {
+          //table already created
+          console.log(err);
+        }
+      }
+    );
+    db.run(
       `INSERT INTO user (username, email, password, created, plan,permission) VALUES ("admin", "admin@membrant.com", "${md5(
         "admin@membrant"
       )}", "2023-09-19", "paid", "admin")`,

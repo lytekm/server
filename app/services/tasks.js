@@ -88,43 +88,11 @@ const getText = (taskid) => {
   });
 };
 
-const getNumberOfItems = (listid) => {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT COUNT(*) FROM tasks WHERE list_id = ?";
-    const params = [listid];
-    database.get(sql, params, (err, row) => {
-      if (err) {
-        reject(err.message);
-      } else {
-        resolve(row);
-      }
-    });
-  });
-};
-
-const getCompletion = (listid) => {
-  return new Promise((resolve, reject) => {
-    const sql =
-      "SELECT COUNT(*) FROM tasks WHERE list_id = ? AND completed = 1";
-    const params = [listid];
-    database.get(sql, params, (err, row) => {
-      if (err) {
-        reject(err.message);
-      } else {
-        console.log(row);
-        resolve(row);
-      }
-    });
-  });
-};
-
 module.exports = {
   createTask,
   deleteTask,
   completeTask,
   updateTask,
   getText,
-  getNumberOfItems,
-  getCompletion,
   setCompletionDate,
 };
